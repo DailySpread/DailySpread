@@ -1,0 +1,384 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# ============================================================
+# 🃏 타로 스프레드 빌더 - CodeRabbit Configuration
+# ============================================================
+# Tech Stack: Vite + React + TypeScript + dnd-kit + Zustand + Tailwind + shadcn/ui
+# Created: 2025-02-07
+# Docs: https://docs.coderabbit.ai/getting-started/yaml-configuration
+
+language: "ko-KR"
+tone_instructions: >
+  한국어로 리뷰해주세요.
+  간결하고 실용적인 톤으로 작성하되, 왜 수정이 필요한지 이유를 명확히 설명해주세요.
+  코드 예시를 포함하여 개선 방향을 구체적으로 제시해주세요.
+early_access: false
+
+# ============================================================
+# 리뷰 설정
+# ============================================================
+reviews:
+  profile: "assertive"
+  request_changes_workflow: true
+  high_level_summary: true
+  high_level_summary_in_walkthrough: true
+  poem: false
+  review_status: true
+  review_details: true
+  commit_status: true
+  collapse_walkthrough: false
+  changed_files_summary: true
+  sequence_diagrams: true
+  estimate_code_review_effort: true
+  assess_linked_issues: true
+  related_prs: true
+  suggested_labels: true
+  suggested_reviewers: false
+
+  # PR 제목 컨벤션 (Conventional Commits)
+  auto_title_instructions: >
+    Format: "<type>(<scope>): <description>"
+    type은 다음 중 하나: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+    scope는 선택사항: builder, card, spread, template, dnd, store, ui, config
+    description은 한글 또는 영어로 간결하게 작성 (80자 이내)
+    예시: "feat(builder): 카드 드래그&드롭 배치 기능 구현"
+
+  # 라벨링
+  labeling_instructions:
+    - label: "feat"
+      instructions: "새로운 기능 추가 PR"
+    - label: "fix"
+      instructions: "버그 수정 PR"
+    - label: "refactor"
+      instructions: "기능 변경 없이 코드 구조 개선"
+    - label: "style"
+      instructions: "UI/스타일링 변경 (Tailwind, shadcn/ui)"
+    - label: "dnd"
+      instructions: "드래그&드롭 관련 변경 (dnd-kit)"
+    - label: "store"
+      instructions: "상태관리 관련 변경 (Zustand)"
+    - label: "docs"
+      instructions: "문서, README, 주석 변경"
+    - label: "test"
+      instructions: "테스트 추가 또는 수정"
+  auto_apply_labels: true
+
+  # 자동 리뷰 설정
+  auto_review:
+    enabled: true
+    auto_incremental_review: true
+    drafts: false
+    base_branches:
+      - main
+      - develop
+    ignore_title_keywords:
+      - "WIP"
+      - "wip"
+      - "[WIP]"
+      - "DO NOT MERGE"
+
+  # 리뷰 제외 경로
+  path_filters:
+    - "!dist/**"
+    - "!build/**"
+    - "!node_modules/**"
+    - "!*.lock"
+    - "!pnpm-lock.yaml"
+    - "!package-lock.json"
+    - "!*.min.js"
+    - "!*.min.css"
+    - "!public/assets/**"
+    - "!**/*.generated.*"
+    - "!coverage/**"
+    - "!.husky/**"
+
+  # ============================================================
+  # 경로별 리뷰 가이드라인
+  # ============================================================
+  path_instructions:
+    # --- 컴포넌트 ---
+    - path: "src/components/**/*.{tsx,ts}"
+      instructions: |
+        ## React 컴포넌트 리뷰 기준
+        - 컴포넌트는 단일 책임 원칙(SRP)을 따르는지 확인
+        - Props 타입은 interface로 명시적 정의 (ComponentNameProps 네이밍)
+        - React.FC 사용 금지 → 일반 함수 선언 + Props 타입 명시
+        - default export 사용 (shadcn/ui 컴포넌트 제외)
+        - 이벤트 핸들러 네이밍: handle + 동사 (handleClick, handleDragEnd)
+        - 조건부 렌더링 시 early return 패턴 권장
+        - 불필요한 리렌더링 방지: useMemo, useCallback 적절한 사용 여부 체크
+        - 매직 넘버/문자열은 상수로 분리
+        - Tailwind 클래스: cn() 유틸리티로 조건부 클래스 결합 (clsx/tailwind-merge)
+        - 컴포넌트 파일 하나에 200줄 이상이면 분리 검토 제안
+
+    # --- 드래그&드롭 (dnd-kit) ---
+    - path: "src/**/*{drag,drop,dnd,sortable,draggable,droppable}*/**"
+      instructions: |
+        ## dnd-kit 리뷰 기준
+        - DndContext, useSortable, useDraggable, useDroppable 올바른 사용 확인
+        - sensors 설정 확인 (PointerSensor, KeyboardSensor 병행 → 접근성)
+        - collision detection 전략 적절성 검토 (closestCenter, rectIntersection 등)
+        - DragOverlay 사용 시 createPortal 적용 여부
+        - onDragStart, onDragEnd, onDragOver 핸들러의 타입 안전성
+        - 드래그 중 상태 업데이트의 불변성(immutability) 확인
+        - 키보드 DnD 접근성 (sortableKeyboardCoordinates) 지원 여부
+
+    - path: "src/**/dnd/**"
+      instructions: |
+        ## dnd-kit 전용 모듈 리뷰
+        - DndContext provider가 적절한 레벨에 배치되었는지 확인
+        - SortableContext의 items prop에 고유 ID 배열 전달 여부
+        - 커스텀 collision detection이 필요한 경우 성능 영향 검토
+        - restrictToParentElement 등 modifier 적용 적절성
+
+    # --- Zustand 스토어 ---
+    - path: "src/store/**/*.{ts,tsx}"
+      instructions: |
+        ## Zustand 스토어 리뷰 기준
+        - 스토어는 도메인별 슬라이스 패턴으로 분리 (spreadStore, cardStore, templateStore)
+        - persist 미들웨어 사용 시 version, migrate 함수 포함 여부
+        - 상태 업데이트 시 불변성 유지 (스프레드 연산자 또는 immer)
+        - selector 사용 권장: useStore(state => state.특정값) (불필요 리렌더 방지)
+        - action과 state 분리: actions는 별도 객체로 그룹핑
+        - devtools 미들웨어 개발 환경 적용 여부
+        - 타입 추론: StateCreator 제네릭 올바른 사용
+        - persist storage에 민감 데이터 저장 금지
+
+    # --- 폼/스키마 (react-hook-form + zod) ---
+    - path: "src/**/*{form,schema,validation}*/**"
+      instructions: |
+        ## react-hook-form + zod 리뷰 기준
+        - zod 스키마는 별도 파일로 분리 (schemas/ 디렉토리)
+        - z.infer<typeof schema>로 타입 자동 추론 활용
+        - zodResolver 연동 확인
+        - 커스텀 에러 메시지는 한국어로 작성
+        - 폼 기본값(defaultValues) 명시적 설정
+        - register 대신 Controller 사용 시 이유 명확한지 확인
+
+    # --- 타입 정의 ---
+    - path: "src/types/**/*.{ts,tsx}"
+      instructions: |
+        ## 타입 정의 리뷰 기준
+        - interface 우선 사용 (확장 필요시), type은 유니온/유틸리티에 사용
+        - any 타입 사용 금지 → unknown 또는 구체적 타입 사용
+        - enum 대신 as const + typeof 패턴 권장
+        - 타로 카드 관련 타입 (TarotCard, SpreadPosition, SpreadTemplate 등) 일관성 확인
+        - 재사용 가능한 유틸리티 타입 활용 (Pick, Omit, Partial, Required)
+
+    # --- 훅 ---
+    - path: "src/hooks/**/*.{ts,tsx}"
+      instructions: |
+        ## 커스텀 훅 리뷰 기준
+        - 훅 네이밍: use + 동사/명사 (useTarotDeck, useSpreadLayout)
+        - 훅 내부에서 다른 훅 호출 순서 일관성
+        - 의존성 배열(deps) 정확성 확인 (불필요한 의존성, 누락된 의존성)
+        - 반환 타입 명시적 정의 (튜플 또는 객체)
+        - 부수효과(side effect) 정리(cleanup) 로직 포함 여부
+
+    # --- 유틸리티 ---
+    - path: "src/utils/**/*.{ts,tsx}"
+      instructions: |
+        ## 유틸리티 함수 리뷰 기준
+        - 순수 함수(pure function)로 작성되었는지 확인
+        - 입출력 타입 명시
+        - 엣지 케이스 처리 (null, undefined, 빈 배열 등)
+        - nanoid 사용 시 적절한 길이 설정
+        - date-fns 사용 시 트리쉐이킹 가능한 import 방식 (import { format } from 'date-fns')
+
+    # --- 페이지/라우트 ---
+    - path: "src/pages/**/*.{tsx,ts}"
+      instructions: |
+        ## 페이지 컴포넌트 리뷰 기준
+        - 페이지 컴포넌트는 레이아웃 + 데이터 로딩 역할에 집중
+        - 비즈니스 로직은 커스텀 훅으로 분리
+        - react-router-dom의 loader/action 패턴 활용 검토
+        - Suspense/ErrorBoundary 적절한 배치
+
+    # --- 설정 파일 ---
+    - path: "{vite,tailwind,tsconfig,postcss,eslint}*"
+      instructions: |
+        ## 설정 파일 리뷰 기준
+        - Vite: alias 경로(@/) 설정 일관성
+        - TypeScript: strict 모드 활성화 여부
+        - Tailwind: 커스텀 테마 확장 시 디자인 토큰 일관성
+        - ESLint: React/TS 관련 룰 적용 확인
+
+    # --- 상수/데이터 ---
+    - path: "src/data/**/*.{ts,json}"
+      instructions: |
+        ## 타로 카드 데이터 리뷰 기준
+        - 카드 데이터 구조의 일관성 (id, name, arcana, image, keywords 등)
+        - 스프레드 템플릿 데이터 유효성 (포지션 좌표, 의미, 질문 가이드)
+        - as const 단언으로 리터럴 타입 보존
+        - 하드코딩된 문자열은 i18n 대응 가능한 구조인지 검토
+
+    # --- 테스트 ---
+    - path: "src/**/*.{test,spec}.{ts,tsx}"
+      instructions: |
+        ## 테스트 리뷰 기준
+        - describe/it 블록 네이밍: 한국어 또는 영어로 행위 기반 작성
+        - Given-When-Then 또는 Arrange-Act-Assert 패턴 준수
+        - 모킹 최소화, 실제 동작 테스트 우선
+        - 스냅샷 테스트보다 행위 기반 테스트 선호
+        - dnd-kit 관련 테스트: 이벤트 시뮬레이션 적절성 확인
+
+  # ============================================================
+  # Pre-merge 체크
+  # ============================================================
+  pre_merge_checks:
+    title:
+      mode: "warning"
+      requirements: >
+        PR 제목은 Conventional Commits 형식을 따라야 합니다.
+        형식: "<type>(<scope>): <description>"
+        type: feat, fix, docs, style, refactor, perf, test, build, ci, chore, revert
+    description:
+      mode: "warning"
+
+    custom_checks:
+      - name: "TypeScript strict 타입 체크"
+        mode: "warning"
+        instructions: >
+          any 타입이 새로 추가되었는지 확인합니다.
+          @ts-ignore, @ts-nocheck 주석이 새로 추가되면 경고합니다.
+          타입 단언(as)의 남용이 없는지 검토합니다.
+      - name: "console.log 잔여 확인"
+        mode: "warning"
+        instructions: >
+          console.log, console.warn, console.error가 프로덕션 코드에 남아있는지 확인합니다.
+          디버깅용 로그는 PR 머지 전에 제거해야 합니다.
+          단, logger 유틸리티를 통한 구조화된 로깅은 허용합니다.
+      - name: "접근성 기본 체크"
+        mode: "warning"
+        instructions: >
+          인터랙티브 요소(버튼, 링크, 입력)에 적절한 aria 속성이 있는지 확인합니다.
+          이미지에 alt 텍스트가 있는지 확인합니다.
+          키보드로 조작 가능한지 검토합니다 (특히 dnd-kit 드래그&드롭 영역).
+
+  # ============================================================
+  # 린트/분석 도구
+  # ============================================================
+  tools:
+    # 프로젝트에 사용하는 도구
+    eslint:
+      enabled: true
+    biome:
+      enabled: false
+    markdownlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+    actionlint:
+      enabled: true
+
+    # 프로젝트에 불필요한 도구 비활성화
+    ruff:
+      enabled: false
+    shellcheck:
+      enabled: false
+    phpstan:
+      enabled: false
+    phpmd:
+      enabled: false
+    phpcs:
+      enabled: false
+    golangci-lint:
+      enabled: false
+    detekt:
+      enabled: false
+    flake8:
+      enabled: false
+    rubocop:
+      enabled: false
+    swiftlint:
+      enabled: false
+    clippy:
+      enabled: false
+    pmd:
+      enabled: false
+    clang:
+      enabled: false
+    cppcheck:
+      enabled: false
+    sqlfluff:
+      enabled: false
+    pylint:
+      enabled: false
+    buf:
+      enabled: false
+    regal:
+      enabled: false
+    checkov:
+      enabled: false
+    tflint:
+      enabled: false
+    hadolint:
+      enabled: false
+    fortitudeLint:
+      enabled: false
+    brakeman:
+      enabled: false
+
+    # 유용한 도구
+    ast-grep:
+      essential_rules: true
+    semgrep:
+      enabled: true
+    oxc:
+      enabled: true
+
+  # Finishing touches
+  finishing_touches:
+    docstrings:
+      enabled: true
+    unit_tests:
+      enabled: true
+
+# ============================================================
+# 채팅 설정
+# ============================================================
+chat:
+  auto_reply: true
+  art: false
+
+# ============================================================
+# 지식 베이스
+# ============================================================
+knowledge_base:
+  opt_out: false
+  web_search:
+    enabled: true
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "CLAUDE.md"
+      - "CONTRIBUTING.md"
+      - ".cursorrules"
+      - "docs/CONVENTIONS.md"
+  learnings:
+    scope: "auto"
+  issues:
+    scope: "auto"
+  pull_requests:
+    scope: "auto"
+
+# ============================================================
+# 코드 생성
+# ============================================================
+code_generation:
+  docstrings:
+    language: "ko-KR"
+  unit_tests:
+    path_instructions:
+      - path: "src/components/**/*.tsx"
+        instructions: |
+          React Testing Library + Vitest 사용.
+          사용자 인터랙션 기반 테스트 작성.
+          render → user action → assertion 패턴.
+      - path: "src/store/**/*.ts"
+        instructions: |
+          Zustand 스토어는 직접 호출하여 테스트.
+          act() 래핑 필요 시 적용.
+      - path: "src/utils/**/*.ts"
+        instructions: |
+          순수 함수 단위 테스트.
+          엣지 케이스 포함 (빈 값, null, 경계값).

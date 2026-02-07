@@ -1,0 +1,79 @@
+name: "🎨 UI/UX 개선 (UI Improvement)"
+description: "타로 웹 서비스의 디자인, 사용성, 접근성 개선을 제안합니다."
+title: "[UI]: "
+labels: ["ui/ux"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## UI/UX 개선 제안
+        시각적 디자인, 사용성, 접근성 관련 개선 사항을 제안해 주세요.
+        새로운 기능 추가가 아닌 **기존 화면의 개선**에 해당하는 내용입니다.
+
+  - type: dropdown
+    id: ui-area
+    attributes:
+      label: "개선 영역"
+      description: "개선이 필요한 화면 또는 영역을 선택해 주세요."
+      options:
+        - "🏠 메인 / 랜딩 화면"
+        - "🃏 카드 선택 화면"
+        - "🔮 스프레드 배치 화면"
+        - "📖 해석 결과 화면"
+        - "👤 프로필 / 히스토리 화면"
+        - "🔗 공유 / 결과 카드"
+        - "📱 모바일 반응형"
+        - "♿ 접근성 (a11y)"
+        - "🛠️ 공통 컴포넌트 / 전체 레이아웃"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: improvement-type
+    attributes:
+      label: "개선 유형"
+      description: "어떤 종류의 개선인지 선택해 주세요."
+      options:
+        - "시각 디자인 - 색상, 타이포그래피, 아이콘, 여백 등"
+        - "인터랙션 - 애니메이션, 전환 효과, 제스처, 피드백"
+        - "사용성 - 흐름 개선, 정보 구조, 네비게이션"
+        - "접근성 - 스크린 리더, 키보드 탐색, 색상 대비"
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-state
+    attributes:
+      label: "현재 상태"
+      description: "지금 어떤 점이 불편하거나 개선이 필요한지 설명해 주세요."
+      placeholder: "예) 해석 결과 화면에서 카드 이미지와 텍스트 간격이 너무 좁아 가독성이 떨어집니다."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-improvement
+    attributes:
+      label: "제안하는 개선"
+      description: "어떻게 바뀌면 좋을지 설명해 주세요."
+      placeholder: "예) 카드 이미지 하단에 16px 이상의 여백을 추가하고, 해석 텍스트의 line-height를 1.6 이상으로 조정합니다."
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: "참고 자료"
+      description: "레퍼런스 이미지, 목업, 참고 서비스 등이 있다면 첨부해 주세요."
+      placeholder: "스크린샷, Figma 링크, 참고 서비스 URL 등"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "제출 전 확인"
+      options:
+        - label: "기존 이슈에 동일한 개선 제안이 없는지 확인했습니다."
+          required: true
+        - label: "이 제안은 새로운 기능 추가가 아닌 기존 화면의 개선입니다."
+          required: true

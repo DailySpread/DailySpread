@@ -1,0 +1,75 @@
+name: "📝 문서 / 콘텐츠 (Docs & Content)"
+description: "타로 카드 해석, 스프레드 설명 등 콘텐츠 오류 수정이나 보강을 요청합니다."
+title: "[Content]: "
+labels: ["content"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 문서 / 콘텐츠 요청
+        타로 카드 해석 텍스트, 스프레드 설명, 가이드 문구 등
+        **콘텐츠 관련** 수정이나 추가 요청을 작성해 주세요.
+
+  - type: dropdown
+    id: content-type
+    attributes:
+      label: "콘텐츠 유형"
+      description: "어떤 종류의 콘텐츠에 해당하나요?"
+      options:
+        - "🃏 카드 해석 텍스트 (정방향/역방향)"
+        - "🔮 스프레드 설명 / 포지션 의미"
+        - "📘 사용 가이드 / 온보딩 문구"
+        - "🌐 다국어 번역"
+        - "📄 README / 기여 가이드"
+        - "🛠️ 기타 텍스트"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: request-type
+    attributes:
+      label: "요청 유형"
+      description: "오류 수정인지 새 콘텐츠 추가인지 선택해 주세요."
+      options:
+        - "오류 수정 - 오탈자, 잘못된 해석, 부정확한 설명"
+        - "내용 보강 - 기존 콘텐츠에 추가 설명이 필요"
+        - "신규 추가 - 아직 없는 콘텐츠 작성 요청"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "상세 설명"
+      description: "어떤 콘텐츠에 어떤 문제가 있는지, 또는 어떤 콘텐츠가 필요한지 설명해 주세요."
+      placeholder: |
+        예) '탑(The Tower)' 카드의 역방향 해석에서 "긍정적 변화"로 설명하고 있으나,
+        전통적 해석에서는 "변화에 대한 저항"이 더 적합합니다.
+    validations:
+      required: true
+
+  - type: input
+    id: target-card-or-spread
+    attributes:
+      label: "대상 카드 / 스프레드"
+      description: "특정 카드나 스프레드에 관한 내용이라면 이름을 적어 주세요."
+      placeholder: "예) The Tower (역방향), 켈틱 크로스 스프레드 - 5번 포지션"
+    validations:
+      required: false
+
+  - type: textarea
+    id: suggested-text
+    attributes:
+      label: "제안하는 수정 / 추가 내용"
+      description: "수정안이나 추가할 텍스트 초안이 있다면 작성해 주세요."
+      placeholder: "구체적인 문구가 있으면 검토가 빨라집니다."
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "제출 전 확인"
+      options:
+        - label: "기존 이슈에 동일한 콘텐츠 요청이 없는지 확인했습니다."
+          required: true
