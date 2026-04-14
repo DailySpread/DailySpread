@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css');
-
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
 /* ═══════════════════════════════════════
    Mystic Tarot Design System v1.0
    ═══════════════════════════════════════ */
@@ -11,60 +11,64 @@
 @layer base {
   :root {
     /* ── Mystic Colors ── */
-    --mystic-deep:    #0C141A;
-    --mystic-navy:    #28487B;
-    --mystic-azure:   #4468A6;
-    --mystic-sky:     #6E94CF;
-    --mystic-mist:    #B9CDEE;
-    --mystic-frost:   #F4F8FF;
+    --mystic-deep: #0c141a;
+    --mystic-navy: #28487b;
+    --mystic-azure: #4468a6;
+    --mystic-sky: #6e94cf;
+    --mystic-mist: #b9cdee;
+    --mystic-frost: #f4f8ff;
 
     /* ── Accent ── */
     --mystic-emerald: #4ade80;
-    --mystic-amber:   #fbbf24;
-    --mystic-rose:    #fb7185;
+    --mystic-amber: #fbbf24;
+    --mystic-rose: #fb7185;
 
     /* ── Surface & Border ── */
-    --mystic-surface:         rgba(255, 255, 255, 0.06);
-    --mystic-surface-subtle:  rgba(255, 255, 255, 0.03);
-    --mystic-surface-elevated:rgba(255, 255, 255, 0.10);
-    --mystic-surface-hover:   rgba(255, 255, 255, 0.08);
-    --mystic-surface-input:   rgba(255, 255, 255, 0.05);
-    --mystic-border:          rgba(255, 255, 255, 0.10);
-    --mystic-border-hover:    rgba(255, 255, 255, 0.20);
+    --mystic-surface: rgba(255, 255, 255, 0.06);
+    --mystic-surface-subtle: rgba(255, 255, 255, 0.03);
+    --mystic-surface-elevated: rgba(255, 255, 255, 0.1);
+    --mystic-surface-hover: rgba(255, 255, 255, 0.08);
+    --mystic-surface-input: rgba(255, 255, 255, 0.05);
+    --mystic-border: rgba(255, 255, 255, 0.1);
+    --mystic-border-hover: rgba(255, 255, 255, 0.2);
 
     /* ── Sky Alpha Variants ── */
-    --mystic-sky-10:  rgba(110, 148, 207, 0.10);
-    --mystic-sky-15:  rgba(110, 148, 207, 0.15);
-    --mystic-sky-20:  rgba(110, 148, 207, 0.20);
-    --mystic-sky-30:  rgba(110, 148, 207, 0.30);
-    --mystic-sky-40:  rgba(110, 148, 207, 0.40);
-    --mystic-sky-50:  rgba(110, 148, 207, 0.50);
+    --mystic-sky-10: rgba(110, 148, 207, 0.1);
+    --mystic-sky-15: rgba(110, 148, 207, 0.15);
+    --mystic-sky-20: rgba(110, 148, 207, 0.2);
+    --mystic-sky-30: rgba(110, 148, 207, 0.3);
+    --mystic-sky-40: rgba(110, 148, 207, 0.4);
+    --mystic-sky-50: rgba(110, 148, 207, 0.5);
 
     /* ── Shadows ── */
-    --shadow-glass:       0 8px 32px rgba(0, 0, 0, 0.20);
-    --shadow-float:       0 10px 40px rgba(0, 0, 0, 0.40);
-    --shadow-glow-sky:    0 0 20px rgba(110, 148, 207, 0.30);
-    --shadow-glow-sky-lg: 0 0 40px rgba(110, 148, 207, 0.40);
-    --shadow-glow-sky-sm: 0 0 8px  rgba(110, 148, 207, 0.40);
-    --shadow-glow-emerald:0 0 15px rgba(74,  222, 128, 0.40);
-    --shadow-glow-amber:  0 0 15px rgba(251, 191, 36,  0.40);
+    --shadow-glass: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --shadow-float: 0 10px 40px rgba(0, 0, 0, 0.4);
+    --shadow-glow-sky: 0 0 20px rgba(110, 148, 207, 0.3);
+    --shadow-glow-sky-lg: 0 0 40px rgba(110, 148, 207, 0.4);
+    --shadow-glow-sky-sm: 0 0 8px rgba(110, 148, 207, 0.4);
+    --shadow-glow-emerald: 0 0 15px rgba(74, 222, 128, 0.4);
+    --shadow-glow-amber: 0 0 15px rgba(251, 191, 36, 0.4);
 
     /* ── Blur ── */
-    --blur-sm:  4px;
-    --blur-lg:  16px;
-    --blur-xl:  24px;
+    --blur-sm: 4px;
+    --blur-lg: 16px;
+    --blur-xl: 24px;
 
     /* ── Gradients ── */
-    --gradient-ocean: linear-gradient(135deg, #0C141A 0%, #1a2d4a 100%);
-    --gradient-sky:   linear-gradient(135deg, #28487B 0%, #6E94CF 100%);
-    --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%);
+    --gradient-ocean: linear-gradient(135deg, #0c141a 0%, #1a2d4a 100%);
+    --gradient-sky: linear-gradient(135deg, #28487b 0%, #6e94cf 100%);
+    --gradient-glass: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0.02) 100%
+    );
 
     /* ── Border Radius ── */
-    --radius-sm:   4px;
-    --radius-md:   6px;
-    --radius-lg:   8px;
-    --radius-xl:   12px;
-    --radius-2xl:  16px;
+    --radius-sm: 4px;
+    --radius-md: 6px;
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --radius-2xl: 16px;
     --radius-full: 9999px;
 
     /* ── Typography Scale ── */
@@ -72,42 +76,49 @@
     --text-4xl: 36px;
     --text-3xl: 30px;
     --text-2xl: 24px;
-    --text-xl:  20px;
-    --text-lg:  18px;
-    --text-base:16px;
-    --text-sm:  14px;
-    --text-xs:  12px;
+    --text-xl: 20px;
+    --text-lg: 18px;
+    --text-base: 16px;
+    --text-sm: 14px;
+    --text-xs: 12px;
 
     /* ── shadcn 호환 ── */
     --background: 210 43% 7%;
-    --foreground:  218 55% 84%;
-    --card:        210 43% 7%;
+    --foreground: 218 55% 84%;
+    --card: 210 43% 7%;
     --card-foreground: 218 55% 84%;
-    --popover:     210 43% 7%;
+    --popover: 210 43% 7%;
     --popover-foreground: 218 55% 84%;
-    --primary:     213 50% 62%;
+    --primary: 213 50% 62%;
     --primary-foreground: 210 43% 7%;
-    --secondary:   215 30% 20%;
+    --secondary: 215 30% 20%;
     --secondary-foreground: 218 55% 84%;
-    --muted:       215 30% 15%;
+    --muted: 215 30% 15%;
     --muted-foreground: 218 30% 65%;
-    --accent:      215 30% 20%;
+    --accent: 215 30% 20%;
     --accent-foreground: 218 55% 84%;
     --destructive: 350 80% 72%;
     --destructive-foreground: 210 43% 7%;
-    --border:      215 20% 18%;
-    --input:       215 20% 18%;
-    --ring:        213 50% 62%;
-    --radius:      0.75rem;
+    --border: 215 20% 18%;
+    --input: 215 20% 18%;
+    --ring: 213 50% 62%;
+    --radius: 0.75rem;
   }
 }
 
 @layer base {
-  * { @apply border-border; }
+  * {
+    @apply border-border;
+  }
   body {
     background-color: var(--mystic-deep);
     color: var(--mystic-mist);
-    font-family: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family:
+      'Pretendard',
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -117,7 +128,6 @@
    Utilities
    ═══════════════════════════════════════ */
 @layer utilities {
-
   /* ── Glass Card ── */
   .glass-card {
     backdrop-filter: blur(var(--blur-xl));
@@ -139,11 +149,21 @@
   }
 
   /* ── Glow Effects ── */
-  .glow-sky    { box-shadow: var(--shadow-glow-sky); }
-  .glow-sky-lg { box-shadow: var(--shadow-glow-sky-lg); }
-  .glow-sky-sm { box-shadow: var(--shadow-glow-sky-sm); }
-  .glow-emerald{ box-shadow: var(--shadow-glow-emerald); }
-  .glow-amber  { box-shadow: var(--shadow-glow-amber); }
+  .glow-sky {
+    box-shadow: var(--shadow-glow-sky);
+  }
+  .glow-sky-lg {
+    box-shadow: var(--shadow-glow-sky-lg);
+  }
+  .glow-sky-sm {
+    box-shadow: var(--shadow-glow-sky-sm);
+  }
+  .glow-emerald {
+    box-shadow: var(--shadow-glow-emerald);
+  }
+  .glow-amber {
+    box-shadow: var(--shadow-glow-amber);
+  }
 
   /* ── Text Effects ── */
   .text-glow-sky {
@@ -162,7 +182,9 @@
     font-weight: 600;
     font-size: 14px;
     box-shadow: var(--shadow-glow-sky);
-    transition: box-shadow 0.2s, background 0.2s;
+    transition:
+      box-shadow 0.2s,
+      background 0.2s;
   }
   .btn-primary:hover {
     box-shadow: var(--shadow-glow-sky-lg);
@@ -176,7 +198,9 @@
     border-radius: var(--radius-xl);
     font-weight: 500;
     font-size: 14px;
-    transition: background 0.2s, border-color 0.2s;
+    transition:
+      background 0.2s,
+      border-color 0.2s;
   }
   .btn-ghost:hover {
     background: rgba(110, 148, 207, 0.1);
@@ -202,7 +226,9 @@
     padding: 8px 16px;
     border-radius: var(--radius-full);
     font-size: 14px;
-    transition: border-color 0.2s, background 0.2s;
+    transition:
+      border-color 0.2s,
+      background 0.2s;
   }
   .btn-pill-active {
     border-color: rgba(110, 148, 207, 0.6);
@@ -223,8 +249,12 @@
     outline: none;
     width: 100%;
   }
-  .input-mystic::placeholder { color: rgba(185, 205, 238, 0.3); }
-  .input-mystic:focus { border-color: rgba(110, 148, 207, 0.5); }
+  .input-mystic::placeholder {
+    color: rgba(185, 205, 238, 0.3);
+  }
+  .input-mystic:focus {
+    border-color: rgba(110, 148, 207, 0.5);
+  }
 
   /* ── Badges ── */
   .badge-emerald {
@@ -292,18 +322,39 @@
 
 /* ── Keyframes ── */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-8px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
 }
 @keyframes twinkle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50%       { opacity: 0.4; transform: scale(0.8); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
 }
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 10px rgba(110, 148, 207, 0.3); }
-  50%       { box-shadow: 0 0 25px rgba(110, 148, 207, 0.7); }
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(110, 148, 207, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(110, 148, 207, 0.7);
+  }
 }
 @keyframes shimmer {
-  0%   { background-position: -200% center; }
-  100% { background-position:  200% center; }
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
