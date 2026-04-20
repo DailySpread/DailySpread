@@ -329,7 +329,7 @@
     animation: twinkle 3s ease-in-out infinite;
   }
   .animate-pulse-glow {
-    animation: pulseGlow 2s ease-in-out infinite;
+    animation: pulse-glow 2s ease-in-out infinite;
   }
   .animate-shimmer {
     animation: shimmer 2s linear infinite;
@@ -357,7 +357,7 @@
     transform: scale(0.8);
   }
 }
-@keyframes pulseGlow {
+@keyframes pulse-glow {
   0%,
   100% {
     box-shadow: 0 0 10px var(--mystic-sky-30);
