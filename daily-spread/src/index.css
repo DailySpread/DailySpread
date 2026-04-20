@@ -111,15 +111,7 @@
     @apply border-border;
   }
   body {
-    background-color: var(--mystic-deep);
-    color: var(--mystic-mist);
-    font-family:
-      'Pretendard',
-      'Inter',
-      -apple-system,
-      BlinkMacSystemFont,
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 }
